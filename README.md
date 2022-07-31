@@ -1,3 +1,21 @@
+<p>
+Gameper Customized flyer chat ui
+</p>
+<br/>
+
+## How to dev
+
+- `yarn` from root
+- `yarn` on example
+- `pod install` on example/ios
+- change root package.json's main: lib/index.js -> src/index.ts, and revert when you publish
+- `yarn ios` on example
+
+## How to install
+
+`yarn add git+https://github.com/Gameper/react-native-chat-ui.git`
+
+It will be installed as '@flyerhq/react-native-chat-ui' on your package.
 <br>
 
 <p align="center">
@@ -42,13 +60,13 @@
 
 Flyer Chat is a platform for creating in-app chat experiences using React Native or [Flutter](https://github.com/flyerhq/flutter_chat_ui). This repository contains chat UI implementation for React Native.
 
-* **Free, open-source and community-driven**. We offer no paid plugins and strive to create an easy-to-use, almost drop-in chat experience for any application. Contributions are more than welcome! Please read our [Contributing Guide](CONTRIBUTING.md).
+- **Free, open-source and community-driven**. We offer no paid plugins and strive to create an easy-to-use, almost drop-in chat experience for any application. Contributions are more than welcome! Please read our [Contributing Guide](CONTRIBUTING.md).
 
-* **Backend agnostic**. You can choose the backend you prefer. But if you don't have one, we provide our own free and open-source [Firebase implementation](https://github.com/flyerhq/react-native-firebase-chat-core), which can be used to create a working chat in minutes. We are also working on our more advanced SaaS and self-hosted solutions.
+- **Backend agnostic**. You can choose the backend you prefer. But if you don't have one, we provide our own free and open-source [Firebase implementation](https://github.com/flyerhq/react-native-firebase-chat-core), which can be used to create a working chat in minutes. We are also working on our more advanced SaaS and self-hosted solutions.
 
-* **Customizable**. Supports custom themes, locales and more. Check our [documentation](https://docs.flyer.chat/react-native/chat-ui) for the info. More options are on the way, let us know if something is missing.
+- **Customizable**. Supports custom themes, locales and more. Check our [documentation](https://docs.flyer.chat/react-native/chat-ui) for the info. More options are on the way, let us know if something is missing.
 
-* **Minimum dependencies**. Our packages are lightweight. Use your favourite packages for selecting images, opening files etc. See the [example](https://github.com/flyerhq/react-native-chat-ui/blob/main/example/src/App.tsx) for possible implementation.
+- **Minimum dependencies**. Our packages are lightweight. Use your favourite packages for selecting images, opening files etc. See the [example](https://github.com/flyerhq/react-native-chat-ui/blob/main/example/src/App.tsx) for possible implementation.
 
 ## Getting Started
 
