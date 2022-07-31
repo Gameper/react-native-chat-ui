@@ -20,6 +20,10 @@ export interface MessageTopLevelProps extends TextMessageTopLevelProps {
   onMessageLongPress?: (message: MessageType.Any) => void
   /** Called when user taps on any message */
   onMessagePress?: (message: MessageType.Any) => void
+  /**
+   * Called when user makes a press on the avatar
+   */
+  onPressAvatar?: (_author: MessageType.Any['author']) => void | Promise<void>
   /** Customize the default bubble using this function. `child` is a content
    * you should render inside your bubble, `message` is a current message
    * (contains `author` inside) and `nextMessageInGroup` allows you to see
@@ -75,6 +79,7 @@ export const Message = React.memo(
     messageWidth,
     onMessagePress,
     onMessageLongPress,
+    onPressAvatar,
     onPreviewDataFetched,
     renderBubble,
     renderCustomMessage,
@@ -188,6 +193,7 @@ export const Message = React.memo(
             currentUserIsAuthor,
             showAvatar,
             showUserAvatars,
+            onPressAvatar,
             theme,
           }}
         />

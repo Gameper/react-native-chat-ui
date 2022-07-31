@@ -126,6 +126,11 @@ const App = () => {
       onPreviewDataFetched={handlePreviewDataFetched}
       onSendPress={handleSendPress}
       user={user}
+      showUserAvatars={true}
+      onPressAvatar={(author) => {
+        console.log('adfs');
+        console.log(author)
+      }}
     />
   )
 }
