@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { TextInput, TextInputProps, View } from 'react-native'
+import { TextInput, TextInputProps, View, ViewStyle } from 'react-native'
 
 import { MessageType } from '../../types'
 import { L10nContext, ThemeContext, unwrap, UserContext } from '../../utils'
@@ -29,6 +29,7 @@ export interface InputTopLevelProps {
    * `TextInput` state. Defaults to `editing`. */
   sendButtonVisibilityMode?: 'always' | 'editing'
   textInputProps?: TextInputProps
+  inputStyle?: ViewStyle
 }
 
 export interface InputAdditionalProps {
@@ -48,6 +49,7 @@ export const Input = ({
   onSendPress,
   sendButtonVisibilityMode,
   textInputProps,
+  inputStyle,
 }: InputProps) => {
   const l10n = React.useContext(L10nContext)
   const theme = React.useContext(ThemeContext)
@@ -78,7 +80,7 @@ export const Input = ({
   }
 
   return (
-    <View style={container}>
+    <View style={[container, inputStyle]}>
       {user &&
         (isAttachmentUploading ? (
           <CircularActivityIndicator

@@ -1,7 +1,8 @@
 import { useActionSheet } from '@expo/react-native-action-sheet'
-import { Chat, MessageType } from '@flyerhq/react-native-chat-ui'
+import { Chat, defaultTheme, MessageType } from '@flyerhq/react-native-chat-ui'
 import { PreviewData } from '@flyerhq/react-native-link-preview'
 import React, { useState } from 'react'
+import { View } from 'react-native'
 import DocumentPicker from 'react-native-document-picker'
 import FileViewer from 'react-native-file-viewer'
 import { launchImageLibrary } from 'react-native-image-picker'
@@ -119,19 +120,52 @@ const App = () => {
   }
 
   return (
-    <Chat
-      messages={messages}
-      onAttachmentPress={handleAttachmentPress}
-      onMessagePress={handleMessagePress}
-      onPreviewDataFetched={handlePreviewDataFetched}
-      onSendPress={handleSendPress}
-      user={user}
-      showUserAvatars={true}
-      onPressAvatar={(author) => {
-        console.log('adfs');
-        console.log(author)
-      }}
-    />
+    <View style={{ flex: 1 }}>
+      <View
+        style={{
+          flex: 1,
+          marginTop: 100,
+          // borderRadius: 16,
+          // overflow: 'hidden',
+          backgroundColor: 'blue',
+          // marginHorizontal: 4,
+        }}
+      >
+        <Chat
+          messages={messages}
+          onAttachmentPress={handleAttachmentPress}
+          onMessagePress={handleMessagePress}
+          onPreviewDataFetched={handlePreviewDataFetched}
+          onSendPress={handleSendPress}
+          user={user}
+          showUserAvatars={true}
+          onPressAvatar={(author) => {
+            console.log('adfs')
+            console.log(author)
+          }}
+          theme={{
+            ...defaultTheme,
+            colors: {
+              ...defaultTheme.colors,
+              inputText: '#222222',
+            },
+          }}
+          inputStyle={{
+            paddingVertical: 8,
+            backgroundColor: '#eeeeee',
+            borderRadius: 8,
+            borderWidth: 0.5,
+            borderColor: '#000000',
+          }}
+          keyboardAccessoryViewStyle={{
+            backgroundColor: '#ffffff',
+            // borderRadius: 8,
+            // borderWidth: 1,
+            // borderColor: '#000000',
+          }}
+        />
+      </View>
+    </View>
   )
 }
 

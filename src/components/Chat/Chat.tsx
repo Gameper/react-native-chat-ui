@@ -16,6 +16,7 @@ import {
   StatusBarProps,
   Text,
   View,
+  ViewStyle,
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
@@ -98,6 +99,8 @@ export interface ChatProps extends ChatTopLevelProps {
    */
   timeFormat?: string
   user: User
+  inputStyle?: ViewStyle
+  keyboardAccessoryViewStyle?: ViewStyle
 }
 
 /** Entry component, represents the complete chat */
@@ -110,6 +113,7 @@ export const Chat = ({
   enableAnimation,
   flatListProps,
   inputProps,
+  inputStyle,
   isAttachmentUploading,
   isLastPage,
   l10nOverride,
@@ -135,6 +139,7 @@ export const Chat = ({
   timeFormat,
   usePreviewData = true,
   user,
+  keyboardAccessoryViewStyle,
 }: ChatProps) => {
   const {
     container,
@@ -417,7 +422,7 @@ export const Chat = ({
               <KeyboardAccessoryView
                 {...{
                   renderScrollable,
-                  style: keyboardAccessoryView,
+                  style: [keyboardAccessoryView, keyboardAccessoryViewStyle],
                 }}
               >
                 <Input
@@ -429,6 +434,7 @@ export const Chat = ({
                     renderScrollable,
                     sendButtonVisibilityMode,
                     textInputProps,
+                    inputStyle,
                   }}
                 />
               </KeyboardAccessoryView>
