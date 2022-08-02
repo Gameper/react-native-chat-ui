@@ -1,8 +1,8 @@
 import dayjs from 'dayjs'
 import * as React from 'react'
 import { ColorValue } from 'react-native'
-import Blob from 'react-native/Libraries/Blob/Blob'
 
+// import Blob from 'react-native/Libraries/Blob/Blob'
 import { l10n } from '../l10n'
 import { defaultTheme } from '../theme'
 import { MessageType, PreviewImage, Theme, User } from '../types'
@@ -25,7 +25,7 @@ export const formatBytes = (size: number, fractionDigits = 2) => {
 }
 
 /** Returns size in bytes of the provided text */
-export const getTextSizeInBytes = (text: string) => new Blob([text]).size
+// export const getTextSizeInBytes = (text: string) => new Blob([text]).size
 
 /** Returns user avatar and name color based on the ID */
 export const getUserAvatarNameColor = (user: User, colors: ColorValue[]) =>
