@@ -182,7 +182,8 @@ export const calculateChatMessages = (
 
       nextMessageInGroup =
         nextMessageSameAuthor &&
-        nextMessage!.createdAt! - message.createdAt! <= 60000
+        dayjs(nextMessage!.createdAt!).isSame(message.createdAt!, 'minute')
+      // nextMessage!.createdAt! - message.createdAt! <= 60000
     }
 
     if (isFirst && messageHasCreatedAt) {
