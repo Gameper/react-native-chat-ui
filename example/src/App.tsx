@@ -1,8 +1,9 @@
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import { Chat, defaultTheme, MessageType } from '@flyerhq/react-native-chat-ui'
 import { PreviewData } from '@flyerhq/react-native-link-preview'
-import React, { useState } from 'react'
-import { View } from 'react-native'
+import dayjs from 'dayjs'
+import React, { useCallback, useState } from 'react'
+import { Text, View } from 'react-native'
 import DocumentPicker from 'react-native-document-picker'
 import FileViewer from 'react-native-file-viewer'
 import { launchImageLibrary } from 'react-native-image-picker'
@@ -10,10 +11,74 @@ import { v4 as uuidv4 } from 'uuid'
 
 import data from './messages.json'
 
+const user = { id: '06c33e8b-e835-4736-80f4-63f44b666664' }
+const PURPLE = '#6B53E8'
+
+const renderBubbleAdditionalInfo = ({
+  message,
+}: {
+  message: MessageType.DerivedMessage
+}) => {
+  // const isAuther= user.id !== message.author.id
+  if (message.nextMessageInGroup) {
+    return null
+  }
+  return (
+    <Text
+      style={{
+        fontSize: 10,
+        marginHorizontal: 4,
+        color: '#bbbbbb',
+        // paddingBottom: 4,
+      }}
+    >
+      {dayjs(message.createdAt).format('HH:mm')}
+    </Text>
+  )
+}
+const renderBubble = ({
+  child,
+  message,
+  nextMessageInGroup,
+}: {
+  child: React.ReactNode
+  message: MessageType.Any
+  nextMessageInGroup: boolean
+}) => {
+  return (
+    <View
+      style={{
+        backgroundColor: user.id !== message.author.id ? '#ffffff' : PURPLE,
+        // borderBottomLeftRadius: !nextMessageInGroup && props.myProfile.id !== message.author.id ? 20 : 0,
+        // borderBottomRightRadius: !nextMessageInGroup && props.myProfile.id === message.author.id ? 20 : 0,
+        borderRadius: 16,
+        borderColor: user.id !== message.author.id ? '#dddddd' : PURPLE,
+        borderWidth: 1,
+        overflow: 'hidden',
+      }}
+    >
+      {child}
+      {user.id !== message.author.id && !nextMessageInGroup ? (
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            paddingLeft: 8,
+            paddingBottom: 4,
+          }}
+        >
+          <Text style={{ fontSize: 12, color: '#bbbbbb' }}>
+            {message.author.firstName}
+          </Text>
+        </View>
+      ) : null}
+    </View>
+  )
+}
+
 const App = () => {
   const { showActionSheetWithOptions } = useActionSheet()
   const [messages, setMessages] = useState(data as MessageType.Any[])
-  const user = { id: '06c33e8b-e835-4736-80f4-63f44b66666c' }
 
   const addMessage = (message: MessageType.Any) => {
     setMessages([message, ...messages])
@@ -132,6 +197,9 @@ const App = () => {
         }}
       >
         <Chat
+          customDateHeaderText={(dateTime) => {
+            return dayjs(dateTime).format('MMM DD, YYYY')
+          }}
           messages={messages}
           onAttachmentPress={handleAttachmentPress}
           onMessagePress={handleMessagePress}
@@ -143,25 +211,55 @@ const App = () => {
             console.log('adfs')
             console.log(author)
           }}
+          renderBubble={renderBubble}
+          renderBubbleAdditionalInfo={(message) =>
+            renderBubbleAdditionalInfo({ message: message })
+          }
           theme={{
             ...defaultTheme,
+            insets: {
+              ...defaultTheme.insets,
+              messageInsetsVertical: 6,
+              messageInsetsHorizontal: 8,
+            },
             colors: {
               ...defaultTheme.colors,
-              inputText: '#222222',
+              primary: '#1d1c21',
+              inputText: '#000000',
+              userAvatarNameColors: ['#dddddd'],
             },
+            fonts: {
+              ...defaultTheme.fonts,
+              sentMessageBodyTextStyle: {
+                ...defaultTheme.fonts.sentMessageBodyTextStyle,
+                fontSize: 14,
+                fontWeight: 'normal',
+              },
+              receivedMessageBodyTextStyle: {
+                ...defaultTheme.fonts.receivedMessageBodyTextStyle,
+                fontSize: 14,
+                fontWeight: 'normal',
+              },
+              dateDividerTextStyle: {
+                ...defaultTheme.fonts.dateDividerTextStyle,
+                fontSize: 12,
+                fontWeight: 'normal',
+              },
+            },
+          }}
+          textInputProps={{
+            placeholderTextColor: '#bbbbbb',
+            placeholder: 'Type a message...',
           }}
           inputStyle={{
             paddingVertical: 8,
-            backgroundColor: '#eeeeee',
+            backgroundColor: '#EDF1F7',
             borderRadius: 8,
             borderWidth: 0.5,
-            borderColor: '#000000',
+            borderColor: '#E4E9F2',
           }}
           keyboardAccessoryViewStyle={{
-            backgroundColor: '#ffffff',
-            // borderRadius: 8,
-            // borderWidth: 1,
-            // borderColor: '#000000',
+            backgroundColor: '#EDF1F7',
           }}
         />
       </View>

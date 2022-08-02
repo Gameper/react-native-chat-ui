@@ -55,6 +55,9 @@ export interface MessageTopLevelProps extends TextMessageTopLevelProps {
     messageWidth: number,
     showName: boolean
   ) => React.ReactNode
+  renderBubbleAdditionalInfo?: (
+    message: MessageType.DerivedMessage
+  ) => React.ReactNode
   /** Show user avatars for received messages. Useful for a group chat. */
   showUserAvatars?: boolean
 }
@@ -86,6 +89,7 @@ export const Message = React.memo(
     renderFileMessage,
     renderImageMessage,
     renderTextMessage,
+    renderBubbleAdditionalInfo,
     roundBorder,
     showAvatar,
     showName,
@@ -184,7 +188,9 @@ export const Message = React.memo(
           return null
       }
     }
-
+    const _renderBubbleAdditionalInfo = () => {
+      return renderBubbleAdditionalInfo?.(message)
+    }
     return (
       <View style={container}>
         <Avatar
@@ -197,6 +203,7 @@ export const Message = React.memo(
             theme,
           }}
         />
+        {currentUserIsAuthor ? _renderBubbleAdditionalInfo() : null}
         <Pressable
           onLongPress={() =>
             onMessageLongPress?.(excludeDerivedMessageProps(message))
@@ -206,6 +213,7 @@ export const Message = React.memo(
         >
           {renderBubbleContainer()}
         </Pressable>
+        {!currentUserIsAuthor ? _renderBubbleAdditionalInfo() : null}
         <StatusIcon
           {...{
             currentUserIsAuthor,

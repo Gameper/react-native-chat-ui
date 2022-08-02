@@ -141,7 +141,7 @@ export const calculateChatMessages = (
     const nextMessageSameAuthor = message.author.id === nextMessage?.author.id
     const notMyMessage = message.author.id !== user.id
 
-    let nextMessageDateThreshold = false
+    // let nextMessageDateThreshold = false
     let nextMessageDifferentDay = false
     let nextMessageInGroup = false
     let showName = false
@@ -172,8 +172,8 @@ export const calculateChatMessages = (
     }
 
     if (messageHasCreatedAt && nextMessageHasCreatedAt) {
-      nextMessageDateThreshold =
-        nextMessage!.createdAt! - message.createdAt! >= 900000
+      // nextMessageDateThreshold =
+      //   nextMessage!.createdAt! - message.createdAt! >= 900000
 
       nextMessageDifferentDay = !dayjs(message.createdAt!).isSame(
         nextMessage!.createdAt!,
@@ -211,7 +211,8 @@ export const calculateChatMessages = (
       ...chatMessages,
     ]
 
-    if (nextMessageDifferentDay || nextMessageDateThreshold) {
+    // if (nextMessageDifferentDay || nextMessageDateThreshold) {
+    if (nextMessageDifferentDay) {
       const text =
         customDateHeaderText?.(nextMessage!.createdAt!) ??
         getVerboseDateTimeRepresentation(nextMessage!.createdAt!, {
