@@ -1,5 +1,11 @@
 import * as React from 'react'
-import { TextInput, TextInputProps, View, ViewStyle } from 'react-native'
+import {
+  Platform,
+  TextInput,
+  TextInputProps,
+  View,
+  ViewStyle,
+} from 'react-native'
 
 import { MessageType } from '../../types'
 import { L10nContext, ThemeContext, unwrap, UserContext } from '../../utils'
@@ -54,6 +60,7 @@ export const Input = ({
   const l10n = React.useContext(L10nContext)
   const theme = React.useContext(ThemeContext)
   const user = React.useContext(UserContext)
+  const textInputRef = React.useRef<TextInput>(null)
   const { container, input, marginRight } = styles({ theme })
 
   // Use `defaultValue` if provided
@@ -98,13 +105,25 @@ export const Input = ({
             />
           )
         ))}
+
       <TextInput
+        ref={textInputRef}
         multiline
         placeholder={l10n.inputPlaceholder}
         placeholderTextColor={`${String(theme.colors.inputText)}80`}
         underlineColorAndroid='transparent'
         {...textInputProps}
-        // Keep our implementation but allow user to use these `TextInputProps`
+        blurOnSubmit={Platform.OS === 'web'}
+        onSubmitEditing={
+          Platform.OS === 'web'
+            ? () => {
+                handleSend()
+                setTimeout(() => {
+                  textInputRef.current?.focus()
+                }, 250)
+              }
+            : undefined
+        }
         style={[input, textInputProps?.style]}
         onChangeText={handleChangeText}
         value={value}
